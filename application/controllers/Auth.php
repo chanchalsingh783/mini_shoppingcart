@@ -25,6 +25,13 @@ class Auth extends CI_Controller {
 		$data['title'] = 'Login Page'; 
         $this->load->view('login', $data);
     }
+    public function thankyou()
+    {
+		$data['title'] = 'Thank you Page'; 
+		$this->load->view('includes/header', $data);
+        $this->load->view('thankyou');
+		$this->load->view('includes/footer', $data);
+    }
 
     public function login()
 	{
@@ -54,7 +61,6 @@ class Auth extends CI_Controller {
             redirect(base_url('/auth'));
         }
 	}
-
 
 	public function regist()
 	{

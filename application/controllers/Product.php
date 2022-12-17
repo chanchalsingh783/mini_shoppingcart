@@ -98,7 +98,49 @@ class Product extends CI_Controller {
 
     public function orderPlace()
     {
-        
+        echo "<pre>";
+        // print_r($_POST);
+        // exit();
+        $total_amount = 0;  
+        $userId = $this->session->has_userdata('id');
+        $orderDate = date('Y-m-d');
+
+        for ($count=0; $count < count($this->input->post('product_id')); $count++) {
+            $product_id = $this->input->post('product_id')[$count];
+            $size = $this->input->post('size')[$count];
+            $color = $this->input->post('color')[$count];
+            $price = $this->input->post('price')[$count];
+            $quantity = $this->input->post('quantity')[$count];
+            $total_amount +=  $price;  
+
+            $data = array(
+                'product_id' => $product_id,
+                'product_size' => $size,
+                'product_color' => $color,
+                'amount' => $price,
+                'quantity' => $quantity,
+            );
+            $data1 = array(
+                'user_id' => $userId,
+                'total_product_amt' => $total_amount,
+                'order_date' => $orderDate
+            );
+            
+            if($this->product->insert_itemDetails($data) )
+            {
+                $this->session->set_flashdata('success',  '<div class="alert alert-success" role="alert">Order Successfully Added</div>');
+                $this->index();
+            }
+        }
+        $this->product->insert_item($data1);
+        if($this->product->insert_itemDetails($data) &&  $this->product->insert_item($data1)){
+            $data = $this->session->all_userdata();
+            // foreach($data as $row => $rows_value)
+            // {
+            //     // $this->session->unset_userdata($row);
+            // }
+            redirect(base_url('/'));
+        }
     }
     
 }

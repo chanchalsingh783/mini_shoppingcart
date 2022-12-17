@@ -32,7 +32,22 @@
                         window.location.href= "<?php echo base_url('/Cart') ?>"
                     }
                 });
-            })
+            });
+
+            $(document).on('submit', '#order-form', function(event){
+                event.preventDefault();
+                var form_data = $(this).serialize();
+                console.log(form_data);
+                $.ajax({
+                    url:"<?php echo base_url('product/orderPlace') ?>",
+                    method:"POST",
+                    data:form_data,
+                    success:function(data)
+                    { 
+                       console.log(data);
+                    }
+                });
+            });
         });
     </script>
 </body>

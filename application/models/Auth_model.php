@@ -10,7 +10,8 @@ class Auth_model extends CI_Model
 
     public function login($username, $password)
 	{
-        $this->db->where('username', $username);
+        $this->db->where('email', $username);
+        $this->db->or_where('mobile', $username);
 		$query = $this->db->get($this->table);
         $data = array('error' => 'Invalid User Name or Password');
 		
@@ -23,6 +24,7 @@ class Auth_model extends CI_Model
 					$data = array(
                         'id'  => $row->id,
                         'username' => $row->username,
+                        'email' => $row->email,
                         'mobile' => $row->mobile,
 						'is_login' => true
 					);
