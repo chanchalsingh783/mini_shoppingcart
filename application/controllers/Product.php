@@ -1,15 +1,20 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require APPPATH . 'libraries\RestController.php';
+use chriskacerguis\RestServer\RestController;
 
-class Product extends CI_Controller {
+class Product extends RestController {
 
     public function __construct()
     {
         parent::__construct();
+		auth_check();
+        $this->load->library('session');
+        
         $this->load->model('product_model', 'product');
     }
 
-    public function add()
+    public function add_get()
     {
         $data['title'] = 'Product Page';
 		$this->load->view('includes/header', $data);
@@ -17,7 +22,7 @@ class Product extends CI_Controller {
 		$this->load->view('includes/footer');
     }
 
-    public function index()
+    public function index_get()
     {
         $data['title'] = 'Product List Page';
         $data['products'] = $this->product->getAllproduct();
@@ -26,7 +31,16 @@ class Product extends CI_Controller {
 		$this->load->view('includes/footer');
     }
 
-    public function addproduct()
+    public function thankyou_get($orderId)
+    {
+		$data['title'] = 'Thank you Page'; 
+		$data['orderId'] = $orderId; 
+		$this->load->view('includes/header', $data);
+        $this->load->view('thankyou', $data);
+		$this->load->view('includes/footer', $data);
+    }
+
+    public function addproduct_post()
     {
         $this->form_validation->set_rules('product_name', 'Product Name', 'required|trim');
         $this->form_validation->set_rules('product_color', 'Color', 'required|trim');
@@ -45,12 +59,13 @@ class Product extends CI_Controller {
                 'color'  => $this->input->post('product_color'),
                 'size'  => $this->input->post('product_size'),
                 'description'  => $this->input->post('description'),
+                'insdate' => date('y-m-d')
 
             );
             if($this->product->insert($data) )
             {
                 $this->session->set_flashdata('success',  '<div class="alert alert-success" role="alert">Product Successfully Added</div>');
-                $this->index();
+                redirect('/', 'refresh');
             } 
         }
         else
@@ -60,7 +75,7 @@ class Product extends CI_Controller {
         } 
     }
 
-    public function addToCart()
+    public function addToCart_post()
     {
         $data = array(
             'product_id' => $this->input->post('product_id'),
@@ -83,7 +98,7 @@ class Product extends CI_Controller {
         echo json_encode(array('message'=> 'Cart Item succesfully Added'));
     }
 
-    public function removeItem()
+    public function removeItem_post()
     {
         $id = $this->input->post('id');
         $cartItem = $this->session->userdata('cartItem');
@@ -96,52 +111,37 @@ class Product extends CI_Controller {
         echo json_encode(array('message'=> 'Cart Item succesfully Removed'));
     }
 
-    public function orderPlace()
+    public function orderPlace_post()
     {
-        echo "<pre>";
-        // print_r($_POST);
-        // exit();
         $total_amount = 0;  
         $userId = $this->session->has_userdata('id');
         $orderDate = date('Y-m-d');
+        // `order_id`, `user_id`, `total_product_amt`, `order_date`, `remark`, `insdate`
 
-        for ($count=0; $count < count($this->input->post('product_id')); $count++) {
-            $product_id = $this->input->post('product_id')[$count];
-            $size = $this->input->post('size')[$count];
-            $color = $this->input->post('color')[$count];
-            $price = $this->input->post('price')[$count];
-            $quantity = $this->input->post('quantity')[$count];
-            $total_amount +=  $price;  
+        $order_array = array('user_id'=> $userId, 'total_product_amt'=> $total_amount);
 
-            $data = array(
-                'product_id' => $product_id,
-                'product_size' => $size,
-                'product_color' => $color,
-                'amount' => $price,
-                'quantity' => $quantity,
-            );
-            $data1 = array(
-                'user_id' => $userId,
-                'total_product_amt' => $total_amount,
-                'order_date' => $orderDate
-            );
-            
-            if($this->product->insert_itemDetails($data) )
-            {
-                $this->session->set_flashdata('success',  '<div class="alert alert-success" role="alert">Order Successfully Added</div>');
-                $this->index();
+        $order_item = [];
+
+        if($orderid = $this->product->insert_item($order_array)){
+            foreach ($this->session->userdata('cartItem') as $row) {
+                $order_item[] = array(
+                    'order_id' => $orderid,
+                    'product_id' => $row['product_id'],
+                    'product_color' => $row['color'],
+                    'product_size' => $row['size'],
+                    'amount' => $row['price'],
+                    'net_amount' => $row['price']
+                ); 
+                $total_amount += $row['price'];
             }
-        }
-        $this->product->insert_item($data1);
-        if($this->product->insert_itemDetails($data) &&  $this->product->insert_item($data1)){
-            $data = $this->session->all_userdata();
-            // foreach($data as $row => $rows_value)
-            // {
-            //     // $this->session->unset_userdata($row);
-            // }
-            redirect(base_url('/'));
+            if (count($order_item) > 0) {
+                $this->product->update_data($orderid, array('total_product_amt'=>$total_amount));
+                $this->product->insert_itemDetails($order_item);
+            }
+           $this->session->unset_userdata('cartItem');
+            echo json_encode(array('message'=> 'Order succesfully', 'orderId'=> $orderid, 'status'=> true));
+            // send_email($this->session->userdata('email'), 'Order Confirm', 'Thank you your order succesfully');
         }
     }
-    
 }
 ?>

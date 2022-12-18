@@ -24,7 +24,7 @@
                                         <div class="d-flex flex-row align-items-center mb-3">
                                             <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                             <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="username" class="form-control" name="username"/>
+                                            <input type="text" id="username" class="form-control" name="username" autocomplete="off"/>
                                             <label class="form-label" for="username">Your Name</label>
                                             </div>
                                         </div>

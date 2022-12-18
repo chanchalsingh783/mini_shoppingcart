@@ -54,15 +54,15 @@
                           <input type="hidden" name="price[]" id="price<?php echo $row['size'] ?>" value="<?php echo $row['price'] ?>">
                         </div>
                         <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                          <button class="btn btn-link px-2"
+                          <button type="button" class="btn btn-link px-2"
                             onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                             <i class="fas fa-minus"></i>
                           </button>
 
-                          <input id="form1" min="0" name="quantity[]" value="2" type="number"
+                          <input id="form1" min="0" name="quantity[]" id="quantity<?= $index; ?>" value="1" type="number"
                             class="form-control form-control-sm" />
 
-                          <button class="btn btn-link px-2"
+                          <button type="button" class="btn btn-link px-2"
                             onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
                             <i class="fas fa-plus"></i>
                           </button>

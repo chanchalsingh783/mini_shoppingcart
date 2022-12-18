@@ -54,10 +54,13 @@
               <a class="nav-link mx-2" href="<?= base_url('product/add') ?>"><i class="fas fa-heart pe-2"></i>Add Product</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link mx-2" href="<?= base_url('cart') ?>"><i class="fas fa-shopping-cart pe-2"></i>Cart</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mx-2" href="<?= base_url('auth/thankyou') ?>"><i class="fas fa-shopping-cart pe-2"></i>Thank you</a>
+              <?php 
+                $count = $this->session->userdata('cartItem') ? count($this->session->userdata('cartItem')): 0;
+              ?>
+              <a class="nav-link mx-2  position-relative" href="<?= base_url('cart') ?>"><i class="fas fa-shopping-cart pe-2"></i>Cart 
+              <span class="position-absolute top-5 start-100 translate-middle badge bg-danger rounded-circle">
+                  <?php echo $count ?>
+              </span></a>
             </li>
             <li class="nav-item ms-3">
               <a class="btn btn-danger btn-rounded" href="<?= base_url('auth/logout') ?>">Logout</a>

@@ -1,7 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require APPPATH . 'libraries\RestController.php';
+use chriskacerguis\RestServer\RestController;
 
-class Auth extends CI_Controller {
+
+class Auth extends RestController {
 
     public function __construct()
     {
@@ -10,7 +13,7 @@ class Auth extends CI_Controller {
         $this->load->model('auth_model', 'auth');
     }
 
-    public function index()
+    public function index_get()
 	{
         if($this->session->has_userdata('is_login') )
 		{
@@ -20,20 +23,13 @@ class Auth extends CI_Controller {
 		$this->load->view('user', $data);
 	}
 
-    public function loginPage()
+    public function loginPage_get()
     {
 		$data['title'] = 'Login Page'; 
         $this->load->view('login', $data);
-    }
-    public function thankyou()
-    {
-		$data['title'] = 'Thank you Page'; 
-		$this->load->view('includes/header', $data);
-        $this->load->view('thankyou');
-		$this->load->view('includes/footer', $data);
-    }
+    } 
 
-    public function login()
+    public function login_post()
 	{
         $this->form_validation->set_rules('username', 'User Name', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
@@ -62,7 +58,7 @@ class Auth extends CI_Controller {
         }
 	}
 
-	public function regist()
+	public function regist_post()
 	{
        
         $this->form_validation->set_rules('username', 'User Name', 'required|trim');
@@ -107,7 +103,7 @@ class Auth extends CI_Controller {
         }
 	}
 
-    public function logout()
+    public function logout_get()
     {
       $data = $this->session->all_userdata();
       foreach($data as $row => $rows_value)

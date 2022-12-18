@@ -8,6 +8,7 @@
             $('.add-to-cart').click(function(){
                 var dataId = $(this).attr("data-info"); 
                 var data = JSON.parse(dataId);
+                console.log(dataId);
                 $.ajax({ 
                     url: "<?php echo base_url('product/addToCart') ?>",
                     method: "post",
@@ -42,9 +43,14 @@
                     url:"<?php echo base_url('product/orderPlace') ?>",
                     method:"POST",
                     data:form_data,
+                    dataType: "json",
                     success:function(data)
                     { 
-                       console.log(data);
+                        if (data.status) {
+                            window.location.href = '<?php echo base_url('product/thankyou'); ?>/'+data.orderId
+                        }else{
+                            alert('Something went wrong')
+                        }
                     }
                 });
             });

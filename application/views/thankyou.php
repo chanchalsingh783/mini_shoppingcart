@@ -60,16 +60,13 @@
 
 <div class="thankyou-page">
     <div class="_header">
-        <h1>Thank You!</h1>
+        <h1>Thank You! </h1>
     </div>
     <div class="_body">
         <div class="_box">
             <h2>
-                <strong>Thanks </strong> a bunch for filling that out. It means a lot to us, just like you do!
+                <strong>Thanks </strong> Order Successfully Placed Your Order Id is <?php echo $orderId; ?>.
             </h2>
-            <p>
-                We really appreciate you giving us a moment of your time today. Thanks for being you.
-            </p>
         </div>
     </div>
 </div>
