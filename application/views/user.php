@@ -98,6 +98,7 @@
                         setTimeout(function() {
                         $('.alert').fadeOut(10000);
                         }, 10000);
+                        window.location.href= "<?php echo base_url('auth/loginPage') ?>"
                     }
                 });
             }); 

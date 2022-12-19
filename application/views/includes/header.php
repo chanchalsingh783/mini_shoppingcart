@@ -11,35 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   </head>
   <body>
-  <!-- <nav class="navbar navbar-expand-lg fixed-top bg-dark navbar-dark">
-    <div class="container">
-      <a class="navbar-brand" href="<?= base_url('/product') ?>">Footware Collection</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-mdb-toggle="collapse"
-        data-mdb-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto align-items-center">
-          <li class="nav-item">
-            <a class="nav-link mx-2" href="<?= base_url('product/add') ?>"><i class="fas fa-heart pe-2"></i>Add Product</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link mx-2" href="<?= base_url('cart') ?>"><i class="fas fa-plus-circle pe-2"></i>Cart</a>
-          </li>
-          <li class="nav-item ms-3">
-            <a class="btn btn-danger btn-rounded" href="<?= base_url('auth/logout') ?>">Logout</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav> -->
 <!-- Navbar -->
 <header>
   <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">

@@ -60,7 +60,6 @@ class Auth extends RestController {
 
 	public function regist_post()
 	{
-       
         $this->form_validation->set_rules('username', 'User Name', 'required|trim');
         $this->form_validation->set_rules('email', 'Email', 'required|trim');
         $this->form_validation->set_rules('mobile', 'Mobile', 'required|trim');

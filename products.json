@@ -5,7 +5,7 @@
         "price": "5000",
         "color": "ID Men's Man Made Leather Boots",
         "size": "10,11",
-        "desc": "ID Men's Man Made Leather Boots"
+        "desc": "ID Men Man Made Leather Boots"
     },
     {
         "name": "Boots1",
@@ -13,7 +13,7 @@
         "price": "5000",
         "color": "Brown, Black, Wood, Umber",
         "size": "10,11",
-        "desc": "Casual Boots For Men's"
+        "desc": "Casual Boots For Men"
     },
     {
         "name": "Loafer",
@@ -21,7 +21,7 @@
         "price": "5000",
         "color": "Brown, Black, Wood, Umber",
         "size": "10,11",
-        "desc": "ID Men's Man Made Leather Loafers"
+        "desc": "ID Men Man Made Leather Loafers"
     },
     {
         "name": "Clogs Nova",
@@ -45,11 +45,11 @@
         "price": "5000",
         "color": "Brown, Black, Wood, Umber",
         "size": "10,11",
-        "desc": "FAUSTO Men's Slip On Back Open Stitched Mules Shoes for Casual Outfit Evening Cut Shoe Outdoor Fashion Trending Comfort with TPR Sole Flexiblity"
+        "desc": "FAUSTO Men Slip On Back Open Stitched Mules Shoes for Casual Outfit Evening Cut Shoe Outdoor Fashion Trending Comfort with TPR Sole Flexiblity"
     },
     {
         "name": "",
         "url":"https://m.media-amazon.com/images/W/WEBP_402378-T2/images/I/61TauDFALrL._UX625_.jpg",
-        "desc": "FAUSTO Men's Back Open Juttis and Mojaris for Occasions Ethnic Wedding Party Fashion Outdoor Indoor Lightweight Shoes with TPR Sole"
+        "desc": "FAUSTO Men Back Open Juttis and Mojaris for Occasions Ethnic Wedding Party Fashion Outdoor Indoor Lightweight Shoes with TPR Sole"
     }
 ]

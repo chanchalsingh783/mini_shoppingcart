@@ -42,7 +42,7 @@
                                 <select class="form-select form-select-sm" name="color[]" id="color<?php echo $row['size'] ?>" aria-label="Default select example"> 
                                 <?php 
                                     $color = explode(',', $row['color']);
-                                  foreach ($color as $value ) {
+                                    foreach ($color as $value ) {
                                     ?>
                                     <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
                                   <?php

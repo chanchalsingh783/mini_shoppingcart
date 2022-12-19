@@ -116,26 +116,57 @@ class Product extends RestController {
         $total_amount = 0;  
         $userId = $this->session->has_userdata('id');
         $orderDate = date('Y-m-d');
-        // `order_id`, `user_id`, `total_product_amt`, `order_date`, `remark`, `insdate`
+        // `order_id`, `user_id`, `total_product_amt`, `order_date`, `insdate`
 
-        $order_array = array('user_id'=> $userId, 'total_product_amt'=> $total_amount);
+        $order_array = array('user_id'=> $userId, 'total_product_amt'=> $total_amount, 'order_date'=> date('Y-m-d'));
 
         $order_item = [];
-
+        $data = array(
+            'product_id' => $this->input->post('product_id'),
+            'color' => $this->input->post('color'),
+            'size' => $this->input->post('size'),
+            'price' => $this->input->post('price'),
+            'quantity'=> $this->input->post('quantity')
+        );
+        
         if($orderid = $this->product->insert_item($order_array)){
-            foreach ($this->session->userdata('cartItem') as $row) {
-                $order_item[] = array(
-                    'order_id' => $orderid,
-                    'product_id' => $row['product_id'],
-                    'product_color' => $row['color'],
-                    'product_size' => $row['size'],
-                    'amount' => $row['price'],
-                    'net_amount' => $row['price']
-                ); 
-                $total_amount += $row['price'];
-            }
+            // foreach ($this->session->userdata('cartItem') as $row) {
+                // $order_item[] = array(
+                //     'order_id' => $orderid,
+                //     'product_id' => $row['product_id'],
+                //     'product_color' => $row['color'],
+                //     'product_size' => $row['size'],
+                //     'amount' => $row['price'],
+                //     'net_amount' => $row['price'] * $row['quantity']
+                // ); 
+
+                for ($count=0; $count < count($this->input->post('product_id')); $count++) { 
+                    $product_id = $this->input->post('product_id')[$count];
+                    $color = $this->input->post('color')[$count];
+                    $size = $this->input->post('size')[$count];
+                    $price = $this->input->post('price')[$count];
+                    $quantity= $this->input->post('quantity')[$count];
+    
+                    $total_amount += $price;
+                    $order_item[] = array(
+                        'order_id' => $orderid,
+                        'product_id' => $product_id,
+                        'product_color' => $color,
+                        'product_size' => $size,
+                        'amount' => $price,
+                        'quantity' => $quantity,
+                        'net_amount' => $price * $quantity
+                    ); 
+                }
+                // $total_amount += $row['price'];
+                // echo "<pre>";
+                // print_r($order_item);
+                // exit();
+        // }
+                
             if (count($order_item) > 0) {
                 $this->product->update_data($orderid, array('total_product_amt'=>$total_amount));
+                // $this->product->update_data('product_tbl',$product_id, array('quantity'=>$quantity));
                 $this->product->insert_itemDetails($order_item);
             }
            $this->session->unset_userdata('cartItem');
